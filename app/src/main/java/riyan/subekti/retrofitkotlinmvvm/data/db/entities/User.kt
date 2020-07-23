@@ -1,4 +1,4 @@
-package riyan.subekti.retrofitkotlinmvvm.db.entities
+package riyan.subekti.retrofitkotlinmvvm.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,5 +16,6 @@ data class User(
     var updated_at: String? = null
 ){
     @PrimaryKey(autoGenerate = false)
-    var uid: Int = CURRENT_USER_ID
+    var uid: Int =
+        CURRENT_USER_ID
 }

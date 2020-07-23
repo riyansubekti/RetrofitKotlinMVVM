@@ -1,12 +1,12 @@
-package riyan.subekti.retrofitkotlinmvvm.db
+package riyan.subekti.retrofitkotlinmvvm.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import riyan.subekti.retrofitkotlinmvvm.db.entities.CURRENT_USER_ID
-import riyan.subekti.retrofitkotlinmvvm.db.entities.User
+import riyan.subekti.retrofitkotlinmvvm.data.db.entities.CURRENT_USER_ID
+import riyan.subekti.retrofitkotlinmvvm.data.db.entities.User
 
 @Dao
 interface UserDao{

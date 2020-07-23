@@ -3,6 +3,7 @@ package riyan.subekti.retrofitkotlinmvvm.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import riyan.subekti.retrofitkotlinmvvm.data.repositories.UserRepository
+import riyan.subekti.retrofitkotlinmvvm.util.Coroutines
 
 class AuthViewModel : ViewModel() {
     var username: String? = null
@@ -19,8 +20,15 @@ class AuthViewModel : ViewModel() {
         }
         // Tanda Seru 2 itu maksudnya operator not null
         // Ini Bad Practice karena tidak menggunakan depedency injection
-        val loginResponse = UserRepository().userLogin(username!!, password!!)
-        authListener?.onSuccess(loginResponse)
+        Coroutines.main {
+            val response = UserRepository().userLogin(username!!, password!!)
+            if (response.isSuccessful){
+                authListener?.onSuccess(response.body()?.user!!)
+            }else{
+                authListener?.onFailure("Error code: ${response.code()}")
+            }
+        }
+
     }
 
 }
