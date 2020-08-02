@@ -11,7 +11,7 @@ import riyan.subekti.retrofitkotlinmvvm.data.db.entities.User
 @Dao
 interface UserDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(user: User) : Long
+    suspend fun upsert(user: User) : Long
 
     @Query("SELECT * FROM user WHERE uid = $CURRENT_USER_ID")
     fun getuser() : LiveData<User>

@@ -6,11 +6,15 @@ import riyan.subekti.retrofitkotlinmvvm.data.repositories.UserRepository
 import riyan.subekti.retrofitkotlinmvvm.util.ApiExecptions
 import riyan.subekti.retrofitkotlinmvvm.util.Coroutines
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val repository: UserRepository
+) : ViewModel() {
     var username: String? = null
     var password: String? = null
 
     var authListener: AuthListener? = null
+
+    fun getLoggedInUser() = repository.getUser()
 
     fun onLoginButtonClick(view: View){
         authListener?.onStarted()
@@ -23,9 +27,10 @@ class AuthViewModel : ViewModel() {
         // Ini Bad Practice karena tidak menggunakan depedency injection
         Coroutines.main {
             try {
-                val authResponse = UserRepository().userLogin(username!!, password!!)
+                val authResponse = repository.userLogin(username!!, password!!)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
+                    repository.saveUser(it)
                     return@main
                 }
                 authListener?.onFailure(authResponse.message!!)
