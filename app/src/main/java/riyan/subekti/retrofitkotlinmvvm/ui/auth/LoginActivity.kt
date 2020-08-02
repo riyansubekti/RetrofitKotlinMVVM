@@ -13,6 +13,7 @@ import riyan.subekti.retrofitkotlinmvvm.data.db.entities.User
 import riyan.subekti.retrofitkotlinmvvm.databinding.ActivityLoginBinding
 import riyan.subekti.retrofitkotlinmvvm.util.hide
 import riyan.subekti.retrofitkotlinmvvm.util.show
+import riyan.subekti.retrofitkotlinmvvm.util.snackbar
 import riyan.subekti.retrofitkotlinmvvm.util.toast
 
 class LoginActivity : AppCompatActivity(), AuthListener {
@@ -33,11 +34,11 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onSuccess(user: User) {
         progress_bar.hide()
-        toast("${user.name} is Logged In")
+        root_layout.snackbar("${user.name} is Logged In")
     }
 
     override fun onFailure(message: String) {
         progress_bar.hide()
-        toast(message)
+        root_layout.snackbar(message)
     }
 }

@@ -1,6 +1,5 @@
 package riyan.subekti.retrofitkotlinmvvm.ui.auth
 
-import androidx.lifecycle.LiveData
 import riyan.subekti.retrofitkotlinmvvm.data.db.entities.User
 
 interface AuthListener {
