@@ -1,38 +1,33 @@
 package riyan.subekti.retrofitkotlinmvvm.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_login.*
+//import kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
+
 import riyan.subekti.retrofitkotlinmvvm.R
-import riyan.subekti.retrofitkotlinmvvm.data.db.AppDatabase
 import riyan.subekti.retrofitkotlinmvvm.data.db.entities.User
-import riyan.subekti.retrofitkotlinmvvm.data.network.MyApi
-import riyan.subekti.retrofitkotlinmvvm.data.network.NetworkConnectionInterceptor
-import riyan.subekti.retrofitkotlinmvvm.data.repositories.UserRepository
 import riyan.subekti.retrofitkotlinmvvm.databinding.ActivityLoginBinding
 import riyan.subekti.retrofitkotlinmvvm.ui.home.HomeActivity
 import riyan.subekti.retrofitkotlinmvvm.util.hide
 import riyan.subekti.retrofitkotlinmvvm.util.show
 import riyan.subekti.retrofitkotlinmvvm.util.snackbar
-import riyan.subekti.retrofitkotlinmvvm.util.toast
 
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
+
+    // Implement kodein
+    override val kodein by kodein()
+    private val factory : AuthViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //bad practice
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-        val api = MyApi(networkConnectionInterceptor)
-        val db = AppDatabase(this)
-        val repository = UserRepository(api, db)
-        val factory = AuthViewModelFactory(repository)
 
         val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
