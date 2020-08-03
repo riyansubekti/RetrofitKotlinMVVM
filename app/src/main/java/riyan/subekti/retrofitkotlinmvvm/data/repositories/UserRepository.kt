@@ -15,7 +15,7 @@ class UserRepository(
         // Ini adalah Bad Practice.
         // Cara ini kurang bagus digunakan
         // Solusinya gunakan depedency injection
-        return apiRequest { MyApi().userLogin(username, password) }
+        return apiRequest { api.userLogin(username, password) }
     }
 
     suspend fun saveUser(user: User) = db.getUserdao().upsert(user)

@@ -1,6 +1,7 @@
 package riyan.subekti.retrofitkotlinmvvm.data.network
 
 
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,8 +19,15 @@ interface MyApi {
     ) : Response<AuthResponse>
 
     companion object{
-        operator fun invoke() : MyApi{
+        operator fun invoke(
+            networkConnectionInterceptor: NetworkConnectionInterceptor
+        ) : MyApi{
+            val okkHttpclient = OkHttpClient.Builder()
+                .addInterceptor(networkConnectionInterceptor)
+                .build()
+
             return Retrofit.Builder()
+                .client(okkHttpclient)
                 .baseUrl("http://192.168.43.193/mvvm/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
